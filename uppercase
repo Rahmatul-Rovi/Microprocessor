@@ -1,0 +1,59 @@
+uppercae-lowercase:
+
+.model small
+.stack 100h
+.data
+msg1 db 'First input in uppercase: $'
+msg2 db 0Dh,0Ah,'The converted lowercase letter is: $'
+msg3 db 0Dh,0Ah,'2nd input in lowercase is: $'
+msg4 db 0Dh,0Ah,'2nd input in Uppercase is: $'
+
+.code
+main proc
+    mov ax, @data
+    mov ds, ax
+
+    ; ----- First input (Uppercase) -----
+    mov ah, 09h
+    lea dx, msg1
+    int 21h
+
+    mov ah, 01h
+    int 21h
+    mov bl, al        ; store uppercase letter
+
+    add bl, 20h       ; convert to lowercase
+
+    mov ah, 09h
+    lea dx, msg2
+    int 21h
+
+    mov ah, 02h
+    mov dl, bl
+    int 21h
+
+    ; ----- Second input (Lowercase) -----
+    mov ah, 09h
+    lea dx, msg3
+    int 21h
+
+    mov ah, 01h
+    int 21h
+    mov bl, al        ; store lowercase letter
+
+    sub bl, 20h       ; convert to uppercase
+
+    mov ah, 09h
+    lea dx, msg4
+    int 21h
+
+    mov ah, 02h
+    mov dl, bl
+    int 21h
+
+    ; Exit
+    mov ah, 4Ch
+    int 21h
+
+main endp
+end main
