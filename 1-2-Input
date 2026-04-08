@@ -1,0 +1,55 @@
+1-2nd input:
+
+.model small
+.stack 100h
+.data
+    msg1 db 'Enter the first input: $'
+    msg2 db 0Dh,0Ah,'Output is = $'
+    msg3 db 0Dh,0Ah,'Enter the second input: $'
+    msg4 db 0Dh,0Ah,'Output is = $'
+.code
+main proc
+    mov ax, @data
+    mov ds, ax
+
+    ; Enter first input
+    mov ah, 09h
+    lea dx, msg1
+    int 21h
+
+    mov ah, 01h        ; input character
+    int 21h
+    mov bl, al         ; store first input
+
+    ; Output first input
+    mov ah, 09h
+    lea dx, msg2
+    int 21h
+
+    mov ah, 02h
+    mov dl, bl
+    int 21h
+
+    ; Enter second input
+    mov ah, 09h
+    lea dx, msg3
+    int 21h
+
+    mov ah, 01h        ; input character
+    int 21h
+    mov bl, al         ; store second input
+
+    ; Output second input
+    mov ah, 09h
+    lea dx, msg4
+    int 21h
+
+    mov ah, 02h
+    mov dl, bl
+    int 21h
+
+    ; Exit program
+    mov ah, 4Ch
+    int 21h
+main endp
+end main
